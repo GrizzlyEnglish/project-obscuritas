@@ -3,14 +3,14 @@ local TileLayer = {}
 
 TileLayer.__index = TileLayer
 
-function TileLayer.init(maptype)
+function TileLayer.init(maptype, size)
     local layer = {}
 
     setmetatable(layer, TileLayer)
 
-    local mapSize = math.random(9, 15)
+    layer.size = size
 
-    self.tiles = generateTiles(mapType, mapSize)
+    layer.tiles = generateTiles(maptype, size)
 
     return layer
 end
