@@ -1,9 +1,8 @@
-lurker = require('third-party/lurker')
-
 -- Globals
+class = require("third-party/30log")
+lurker = require('third-party/lurker')
 Gamestate = require('third-party/hump/gamestate')
-
-level = require('scenes/level/level')
+battle = require('states/battle')
 
 if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
     require("lldebugger").start()
@@ -11,5 +10,5 @@ end
 
 function love.load()
     Gamestate.registerEvents()
-    Gamestate.switch(level)
+    Gamestate.switch(battle)
 end
