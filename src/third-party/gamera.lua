@@ -169,23 +169,29 @@ function gamera:getVisibleCorners()
   return x1,y1,x2,y2,x3,y3,x4,y4
 end
 
-function gamera:draw(f)
-  love.graphics.setScissor(self:getWindow())
+-- modified here
+function gamera:apply()
+    love.graphics.setScissor(self:getWindow())
 
-  love.graphics.push()
+    love.graphics.push()
     local scale = self.scale
     love.graphics.scale(scale)
-
     love.graphics.translate((self.w2 + self.l) / scale, (self.h2+self.t) / scale)
     love.graphics.rotate(-self.angle)
     love.graphics.translate(-self.x, -self.y)
-
-    f(self:getVisible())
-
-  love.graphics.pop()
-
-  love.graphics.setScissor()
 end
+
+function gamera:remove()
+      love.graphics.pop()
+      love.graphics.setScissor()
+end
+
+function gamera:draw(f)
+    self:apply()
+    f(self:getVisible())
+    self:remove()
+end
+-- to here
 
 function gamera:toWorld(x,y)
   local scale, sin, cos = self.scale, self.sin, self.cos
@@ -202,6 +208,3 @@ function gamera:toScreen(x,y)
 end
 
 return gamera
-
-
-

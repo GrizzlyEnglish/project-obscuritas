@@ -11,10 +11,20 @@ local Tile = class("Tile")
 
 function Tile:init(selfType, x, y)
     -- TODO: rce - Determine where to place width and height
-    self.position = Bounds(x, y, 516, 657)
+    self.position = Bounds(x, y, Tile.getWidth(), Tile.getHeight())
     self.visible = true
     self.highlighted = false
-    self.image = nil
+    -- TODO: rce - Move to a loader system
+    self.sprite = love.graphics.newImage('assets/sprites/prototype/tiles/tile_1.png')
+    self.is_selected = false
+end
+
+function Tile.getWidth()
+    return 516
+end
+
+function Tile.getHeight()
+    return 657
 end
 
 return Tile
