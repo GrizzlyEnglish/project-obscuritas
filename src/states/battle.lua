@@ -5,6 +5,7 @@ local Battle = class("Battle")
 local RenderSystem = require 'systems/render_system'
 local TileSelectionSystem = require 'systems/tile_selection_system'
 local Tile = require 'entities/tile'
+local Bat = require 'entities/bat'
 
 function Battle:init()
     local world = tiny.world()
@@ -15,6 +16,9 @@ function Battle:init()
 
     world:addSystem(TileSelectionSystem())
     world:addSystem(RenderSystem(self.camera))
+
+    -- TODO: Create a spawner to handle determining who to spawn, for now just testing
+    world:add(Bat(0, 0))
 
     _G.world = world
     _G.camera = self.camera
@@ -27,14 +31,15 @@ function generateTiles(size, world)
 
     for i=0,size do
         tiles[i] = { }
+        local t = { }
         for j=0,size do
-            local t = Tile("dungeon", x, y)
-            x = x + Tile.getWidth()
+            t = Tile("dungeon", x, y)
+            x = x + t.sprite:getWidth()
             world:add(t)
         end
-        y = y + (Tile.getHeight() * .65)
+        y = y + (t.sprite:getHeight() * .65)
         if i % 2 == 0 then
-            x = (Tile.getWidth() / 2)
+            x = (t.sprite:getWidth() / 2)
         else 
             x = 0
         end
